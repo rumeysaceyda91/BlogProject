@@ -15,16 +15,17 @@ export default function AuthenticatedLayout({ header, children }) {
             <nav className="border-b border-gray-100 bg-white">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
-                        <div className="flex">
+                        <div className="flex font-black">
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                             <NavLink href={route('post.index')}>
-                                    Home
+                                    Dashboard
                             </NavLink>
                             </div>
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
                             <div className="relative ms-3">
+                            {user ? (
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
@@ -48,6 +49,23 @@ export default function AuthenticatedLayout({ header, children }) {
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
+                            ) : (
+                                <>
+                                    <Link
+                                        href={route('login')}
+                                        className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                    >
+                                        Log in
+                                    </Link>
+
+                                    <Link
+                                        href={route('register')}
+                                        className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                    >
+                                        Register
+                                    </Link>
+                                </>
+                            )}
                             </div>
                         </div>
 
@@ -102,11 +120,13 @@ export default function AuthenticatedLayout({ header, children }) {
                 >
 
                     <div className="border-t border-gray-200 pb-1 pt-4">
+                    {user ? (
+                        <>
                         <div className="px-4">
-                            <div className="text-base font-medium text-gray-800">
+                            <div className="text-base font-bold text-gray-800">
                                 {user.name}
                             </div>
-                            <div className="text-sm font-medium text-gray-500">
+                            <div className="text-sm font-bold text-gray-500">
                                 {user.email}
                             </div>
                         </div>
@@ -123,6 +143,24 @@ export default function AuthenticatedLayout({ header, children }) {
                                 Log Out
                             </ResponsiveNavLink>
                         </div>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                href={route('login')}
+                                className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                            >
+                                Log in
+                            </Link>
+
+                            <Link
+                                href={route('register')}
+                                className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                            >
+                                Register
+                            </Link>
+                        </>
+                    )}
                     </div>
                 </div>
             </nav>

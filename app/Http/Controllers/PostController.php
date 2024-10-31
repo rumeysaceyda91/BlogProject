@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\PostResource;
 use Inertia\Inertia;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +14,17 @@ class PostController extends Controller
 {
     public function index()
     {
-        //dd(Auth::user());
+        $query = Post::query();
+
+        $sortField = request("sort_field", 'created_at');
+        $sortDirection = request("sort_direction", "desc");
+
+        $posts = $query->orderBy($sortField, $sortDirection)
+            ->paginate(20)
+            ->onEachSide(1);
+            //dd($posts);
         return Inertia::render('Index', [
-            'posts' => Post::all()
+            'posts' => $posts
         ]);
     }
     public function create()
@@ -43,9 +52,9 @@ class PostController extends Controller
     public function show($slug)
     {
         $post = Post::select('*')->where('slug', '=', $slug)
-        ->get();
-
-        return inertia('Post/Show', [
+        ->first();
+        
+        return inertia::render('Post/Show', [
             'post' => $post
         ]);
     }

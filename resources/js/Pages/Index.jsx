@@ -37,11 +37,13 @@ export default function Index({ auth, posts }) {
                         </tr>
                         </thead>
                         <tbody>
-                        {posts && posts.map((post) => (
+                        {posts && posts.data.map((post) => (
                             <tr key={post.id}>
                             <td className="px-3 py-2">{post.id}</td>
                             <td className="px-3 py-2 text-black">
+                            <Link href={route("post.show", {slug: post.slug})}>
                             {post.title}
+                            </Link>
                             </td>
                             <td className="px-3 py-2 text-nowrap">{post.content}</td>
                             </tr>

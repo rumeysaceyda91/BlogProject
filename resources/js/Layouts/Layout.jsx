@@ -22,7 +22,7 @@ export default function Layout({ header, children }) {
                                     href={route('post.index')}
                                     active={route().current('post.index')}
                                 >
-                                    Home
+                                    Dashboard
                                 </NavLink>
                             </div>
                         </div>
@@ -68,7 +68,7 @@ export default function Layout({ header, children }) {
                                     >
                                         Register
                                     </Link>
-                                </>
+                                    </>
                             )}
                             </div>
                         </div>
