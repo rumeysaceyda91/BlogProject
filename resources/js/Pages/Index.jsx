@@ -33,7 +33,7 @@ export default function Index({ auth, posts }) {
                         <tr>
                             <th className="px-3 py-3">ID</th>
                             <th className="px-3 py-3">Post Title</th>
-                            <th className="px-3 py-3">Created By</th>
+                            <th className="px-3 py-3">Post Content</th>
                         </tr>
                         </thead>
                         <tbody>
