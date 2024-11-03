@@ -40,13 +40,18 @@ class PostController extends Controller
         $data['title'] = $request->title;
         $data['content'] = $request->content;
         $data['user_id'] = Auth::id();
-        
-        $post = Post::create($data);
-        $slug = Str::slug("{$post->title}-{$post->id}");
-        $post->update(['slug' => $slug]);
+        $post_count = Post::whereDate('created_at', \Carbon\Carbon::today())
+                          ->where('user_id','=',$data['user_id'])->count();
 
-        return to_route('post.index')
-            ->with('success', 'Post was created');
+        if($post_count >= 10){
+            return back()->withErrors(['name' => 'You have exceeded the number of three post creations.']);
+        }else{
+            $post = Post::create($data);
+            $slug = Str::slug("{$post->title}-{$post->id}");
+            $post->update(['slug' => $slug]);
+
+            return back()->withSuccess('Post was created successfully!!');
+        }
     }
 
     public function show($slug)

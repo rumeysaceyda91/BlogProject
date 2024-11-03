@@ -30,10 +30,17 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $successMessage = $request->session()->pull('success');
+        $errorMessage = $request->session()->pull('error');
+
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+            ],
+            'flash' => [
+                'message' => $successMessage ?? $errorMessage ?? null,
+                'type' => $successMessage ? 'success' : ($errorMessage ? 'error' : null)
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
