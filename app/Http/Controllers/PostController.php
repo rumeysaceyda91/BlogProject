@@ -43,7 +43,7 @@ class PostController extends Controller
         $post_count = Post::whereDate('created_at', \Carbon\Carbon::today())
                           ->where('user_id','=',$data['user_id'])->count();
 
-        if($post_count >= 10){
+        if($post_count >= 3){
             return back()->withErrors(['name' => 'You have exceeded the number of three post creations.']);
         }else{
             $post = Post::create($data);
