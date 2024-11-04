@@ -16,7 +16,6 @@ class PostController extends Controller
     public function index()
     {
         if(Cache::has('cached_posts')){
-            //dd(Cache::get('cached_posts'));
             return Inertia::render('Index', [
                 'posts' => Cache::get('cached_posts')
             ]);

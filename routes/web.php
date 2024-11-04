@@ -5,9 +5,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/curr', function(){
+/*Route::get('/curr', function(){
     print_r(app()->make('redis'));
-});
+});*/
 Route::redirect('/', '/index');
 Route::get('/', function () {
     return Inertia::render('Index', [
