@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
 
 class BlogTest extends TestCase
 {
@@ -13,14 +14,18 @@ class BlogTest extends TestCase
      */
     public function test_store_post()
     {
+        $user = User::factory()->create();
         $data = [
             'title' => 'First Post Test',
             'content' => 'I love to do this',
-            'user_id' => 1
+            'user_id' => $user->id
         ];
     
-        $this->post(route('post.store'), $data)
-            ->assertStatus(201)
-            ->assertJson($data);
+        $response = $this->actingAs($user)
+            ->post('/post-store', $data);
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/');     
     }
 }
